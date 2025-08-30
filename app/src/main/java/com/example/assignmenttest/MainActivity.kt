@@ -33,11 +33,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Simple state to decide which screen to show
             var showAdminPage by remember { mutableStateOf(false) }
 
             if (showAdminPage) {
-                AdminMainPage() // Assuming AdminMainPage is a full screen Composable
+                AdminMainPage() 
             } else {
                 StayWelcomeScreen(onAdminClick = { showAdminPage = true })
             }
@@ -46,7 +45,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun StayWelcomeScreen(onAdminClick: () -> Unit) { // Added a callback
+fun StayWelcomeScreen(onAdminClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +65,7 @@ fun StayWelcomeScreen(onAdminClick: () -> Unit) { // Added a callback
                 color = Color.Black,
                 textAlign = TextAlign.Center
             ),
-            delayPerChar = 50 // Adjust typing speed
+            delayPerChar = 50
         )
 
         Spacer(modifier = Modifier.height(60.dp))
@@ -77,7 +76,7 @@ fun StayWelcomeScreen(onAdminClick: () -> Unit) { // Added a callback
             icon = Icons.Default.Person,
             onClick = {
                 println("User button clicked")
-                // Handle user navigation or action here
+
             }
         )
 
@@ -87,7 +86,7 @@ fun StayWelcomeScreen(onAdminClick: () -> Unit) { // Added a callback
         SelectionButton(
             text = "Chalet",
             icon = Icons.Default.Home,
-            onClick = onAdminClick // Call the passed lambda
+            onClick = onAdminClick
         )
     }
 }
@@ -96,8 +95,8 @@ fun TypewriterText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = TextStyle.Default,
-    delayPerChar: Int = 100, // Delay time per character (milliseconds)
-    onComplete: () -> Unit = {} // Completion callback
+    delayPerChar: Int = 100,
+    onComplete: () -> Unit = {}
 ) {
     var currentText by remember { mutableStateOf("") }
     var currentIndex by remember { mutableStateOf(0) }
@@ -124,14 +123,14 @@ fun TypewriterText(
 fun SelectionButton(
     text: String,
     icon: ImageVector,
-    onClick: () -> Unit // Corrected: This is an action
+    onClick: () -> Unit
 ) {
     Button(
-        onClick = onClick, // No cast needed
+        onClick = onClick,
         modifier = Modifier
             .size(140.dp, 120.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFFB347) // Example color
+            containerColor = Color(0xFFFFB347)
         ),
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -162,7 +161,7 @@ fun TopBar(title: String) {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                Color(0xFFFFB347), // Example color
+                Color(0xFFFFB347),
                 RoundedCornerShape(8.dp)
             )
             .padding(16.dp),
@@ -179,6 +178,5 @@ fun TopBar(title: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewStayWelcomeScreen() {
-    // For preview, you might need a dummy callback
     StayWelcomeScreen(onAdminClick = {})
 }
