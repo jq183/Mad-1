@@ -22,7 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextStyle
+import com.example.chaletbooking.ui.theme.AdminMainPage // Make sure this import is correct
 import kotlinx.coroutines.delay
 
 
@@ -30,13 +33,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            StayWelcomeScreen()
+            // Simple state to decide which screen to show
+            var showAdminPage by remember { mutableStateOf(false) }
+
+            if (showAdminPage) {
+                AdminMainPage() // Assuming AdminMainPage is a full screen Composable
+            } else {
+                StayWelcomeScreen(onAdminClick = { showAdminPage = true })
+            }
         }
     }
 }
 
 @Composable
-fun StayWelcomeScreen() {
+fun StayWelcomeScreen(onAdminClick: () -> Unit) { // Added a callback
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,6 +77,7 @@ fun StayWelcomeScreen() {
             icon = Icons.Default.Person,
             onClick = {
                 println("User button clicked")
+                // Handle user navigation or action here
             }
         )
 
@@ -76,9 +87,7 @@ fun StayWelcomeScreen() {
         SelectionButton(
             text = "Chalet",
             icon = Icons.Default.Home,
-            onClick = {
-                println("Admin button clicked")
-            }
+            onClick = onAdminClick // Call the passed lambda
         )
     }
 }
@@ -115,14 +124,14 @@ fun TypewriterText(
 fun SelectionButton(
     text: String,
     icon: ImageVector,
-    onClick: () -> Unit
+    onClick: () -> Unit // Corrected: This is an action
 ) {
     Button(
-        onClick = onClick,
+        onClick = onClick, // No cast needed
         modifier = Modifier
             .size(140.dp, 120.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFFB347)
+            containerColor = Color(0xFFFFB347) // Example color
         ),
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -153,7 +162,7 @@ fun TopBar(title: String) {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                Color(0xFFFFB347),
+                Color(0xFFFFB347), // Example color
                 RoundedCornerShape(8.dp)
             )
             .padding(16.dp),
@@ -170,5 +179,6 @@ fun TopBar(title: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewStayWelcomeScreen() {
-    StayWelcomeScreen()
+    // For preview, you might need a dummy callback
+    StayWelcomeScreen(onAdminClick = {})
 }
