@@ -40,8 +40,7 @@ fun StayWelcomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFF8DC))
-            .padding(16.dp),
+            .background(Color(0xFFFFF8DC)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(title = "Stay")
@@ -152,11 +151,8 @@ fun TopBar(title: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                Color(0xFFFFB347),
-                RoundedCornerShape(8.dp)
-            )
-            .padding(16.dp),
+            .background(Color(0xFFFFB347))
+            .padding(20.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
