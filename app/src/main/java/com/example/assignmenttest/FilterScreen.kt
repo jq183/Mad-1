@@ -54,7 +54,6 @@ fun FilterScreen(navController: NavController) {
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
-            // Environment & Surroundings Section
             FilterSection(
                 title = "Environment & Surroundings",
                 options = listOf(

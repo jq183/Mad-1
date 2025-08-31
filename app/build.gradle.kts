@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.assignmenttest"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -50,7 +50,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.compose.material:material-icons-extended:<version>")
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime)
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation(libs.material3)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

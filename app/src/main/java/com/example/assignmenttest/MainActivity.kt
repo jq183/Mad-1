@@ -57,6 +57,7 @@ fun Navigation() {
         composable("user_login") { UserLoginPage(navController) }
         composable("main") { MainPage(navController) }
         composable("filter") { FilterScreen(navController) }
+        composable("admin_main") { AdminMainPage(navController) }
         composable("homestay_detail/{homestayId}") { backStackEntry ->
             val homestayId = backStackEntry.arguments?.getString("homestayId")?.toIntOrNull() ?: 1
             HomestayDetailPage(
@@ -107,7 +108,7 @@ fun StayWelcomeScreen(navController: NavController) {
             text = "Chalet",
             icon = Icons.Default.Home,
             onClick = {
-                println("Admin button clicked")
+                navController.navigate("admin_main")
             },
             modifier = Modifier.size(140.dp, 120.dp)
         )
