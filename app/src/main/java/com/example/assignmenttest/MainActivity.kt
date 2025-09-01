@@ -103,7 +103,6 @@ fun StayWelcomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Admin button
         SelectionButton(
             text = "Chalet",
             icon = Icons.Default.Home,
@@ -131,7 +130,6 @@ fun UserLoginPage(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(60.dp))
 
-            // Email Input Field
             OutlinedTextField(
                 value = "",
                 onValueChange = { },
