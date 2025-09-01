@@ -31,9 +31,12 @@ import androidx.compose.material3.*
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+
+import com.example.assignmenttest.Repository.*
 
 
 class MainActivity : ComponentActivity() {
@@ -54,10 +57,39 @@ fun Navigation() {
         startDestination = "welcome"
     ) {
         composable("welcome") { StayWelcomeScreen(navController) }
-        composable("user_login") { UserLoginPage(navController) }
+        composable("user_login") {LoginPage(
+            title = "User Login",
+            navController = navController,
+            onLoginClick = { email, password ->
+                val success = AuthRepository.loginUser(email, password)
+                if (success) {
+                    navController.navigate("main")
+                } else {
+                }
+            },
+            onSignUpClick = {
+                navController.navigate("user_signup")
+            }
+        )}
         composable("main") { MainPage(navController) }
         composable("filter") { FilterScreen(navController) }
         composable("admin_main") { AdminMainPage(navController) }
+        composable("admin_login") { LoginPage(
+            title = "Admin Login",
+            navController = navController,
+            onLoginClick = { email, password ->
+                val success = AuthRepository.loginAdmin(email, password)
+                if (success) {
+                    navController.navigate("admin_main")
+                } else {
+                    // TODO:
+                }
+            },
+            onSignUpClick = {
+                navController.navigate("admin_signup")
+            }
+        )}
+        composable("admin_signup") { AdminSignUpPage(navController) }
         composable("homestay_detail/{homestayId}") { backStackEntry ->
             val homestayId = backStackEntry.arguments?.getString("homestayId")?.toIntOrNull() ?: 1
             HomestayDetailPage(
@@ -67,6 +99,7 @@ fun Navigation() {
         }
     }
 }
+
 
 @Composable
 fun StayWelcomeScreen(navController: NavController) {
@@ -107,105 +140,10 @@ fun StayWelcomeScreen(navController: NavController) {
             text = "Chalet",
             icon = Icons.Default.Home,
             onClick = {
-                navController.navigate("admin_main")
+                navController.navigate("admin_login")
             },
             modifier = Modifier.size(140.dp, 120.dp)
         )
-    }
-}
-
-@Composable
-fun UserLoginPage(navController: NavController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFFF8DC)),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TopBar(title = "Login", navController = navController, showBack = true)
-
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(60.dp))
-
-            OutlinedTextField(
-                value = "",
-                onValueChange = { },
-                label = { Text("Email") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFFFB347),
-                    focusedLabelColor = Color(0xFFFFB347),
-                    unfocusedBorderColor = Color.Gray,
-                    unfocusedLabelColor = Color.Gray
-                )
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Password Input Field
-            OutlinedTextField(
-                value = "",
-                onValueChange = { },
-                label = { Text("Password") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFFFFB347),
-                    focusedLabelColor = Color(0xFFFFB347),
-                    unfocusedBorderColor = Color.Gray,
-                    unfocusedLabelColor = Color.Gray
-                ),
-                visualTransformation = PasswordVisualTransformation()
-            )
-
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // Login Button
-            Button(
-                onClick = { navController.navigate("main") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFFB347)
-                ),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(
-                    text = "Login",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Sign up link
-            Row {
-                Text(
-                    text = "No account? ",
-                    fontSize = 14.sp,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Sign up",
-                    fontSize = 14.sp,
-                    color = Color.Blue,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable {
-                        // Navigate to sign up page
-                    }
-                )
-            }
-        }
     }
 }
 
@@ -322,3 +260,5 @@ fun TopBar(
 fun PreviewStayWelcomeScreen() {
     Navigation()
 }
+
+

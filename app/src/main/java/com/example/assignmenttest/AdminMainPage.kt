@@ -384,16 +384,15 @@ fun ChaletCard(
                     text = "Status: $status",
                     fontSize = 14.sp,
                     color = when (status) {
-                        "Uploaded" -> Color(0xFF4CAF50)  // Green
-                        "Pending" -> Color(0xFFFF9800)   // Orange
-                        "Rejected" -> Color(0xFFF44336)  // Red
+                        "Uploaded" -> Color(0xFF4CAF50)
+                        "Pending" -> Color(0xFFFF9800)
+                        "Rejected" -> Color(0xFFF44336)
                         else -> Color.Gray
                     },
                     fontWeight = FontWeight.Medium
                 )
             }
 
-            // View button
             Button(
                 onClick = onViewClick,
                 shape = RoundedCornerShape(20.dp),
